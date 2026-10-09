@@ -1,5 +1,6 @@
 import { generateToken } from "../config/token.js";
 import User from "../model/User.js";
+import { ENV } from "../lib/env.js";
 import bcrypt from "bcryptjs";
 import uploadFile from "../Service/Storage.service.js";
 import EmailVerification from "../model/EmailVerification.js";

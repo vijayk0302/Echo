@@ -8,9 +8,9 @@ export const generateToken = (id, res) => {
     const token = jwt.sign({ id }, JWT_SECRET, { expiresIn: "1d" });
 
     res.cookie("token", token, {
-      maxAge: 7 * 24 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
-      sameSite: "none",
+      sameSite: ENV.NODE_ENV === "production" ? "none" : "lax",
       secure: ENV.NODE_ENV === "production",
       path: "/",
     });
