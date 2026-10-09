@@ -21,14 +21,17 @@ app.use(cors({
     credentials:true
 }))
 
-app.use('/',(req,res)=>{
-    res.send('running backend')
-})
 
 app.use('/api/auth',authRoutes)
 app.use('/api/message',messageRoutes)
 app.use('/api/update',followRoutes)
 app.use('/api/user',userRoutes)
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Echo backend is running",
+  });
+});
 
 export default app
