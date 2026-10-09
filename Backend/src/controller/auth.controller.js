@@ -187,6 +187,10 @@ export const logout = (req, res) => {
   try {
     res.cookie("token", "", {
       maxAge: 0,
+      httpOnly: true,
+      sameSite: ENV.NODE_ENV === "production" ? "none" : "lax",
+      secure: ENV.NODE_ENV === "production",
+      path: "/",
     });
     res.status(200).json({
       message: "logged off successfully",
