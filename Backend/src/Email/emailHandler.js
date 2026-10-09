@@ -1,6 +1,10 @@
 import { ENV } from "../lib/env.js";
 import { mg, sender } from "../lib/resend.js";
-import { createWelcomeEmail, verificationCodeEmail } from "./emailTemplate.js";
+import {
+  createWelcomeEmail,
+  resetPasswordEmail,
+  verificationCodeEmail,
+} from "./emailTemplate.js";
 
 export const sendWelcomeEmail = async (email, name, url) => {
   const html = createWelcomeEmail(name, url);
@@ -29,6 +33,24 @@ export const sendVerifcationCode = async (email, name, code) => {
     });
 
     console.log("Email sent:", result);
+  } catch (error) {
+    console.error("Mailgun email error:", error.message);
+  }
+};
+
+export const sendResetPasswordEmail = async (email, name, url) => {
+  try {
+    const html = resetPasswordEmail(name, url);
+
+    const result = await mg.messages.create(ENV.MAILGUN_DOMAIN, {
+      from: `${sender.name} <${sender.email}>`,
+      to: email,
+      subject: "Reset your Echo password",
+      html,
+    });
+
+    console.log("Email sent:", result);
+    return { success: true, data: result };
   } catch (error) {
     console.error("Mailgun email error:", error.message);
   }

@@ -1,5 +1,5 @@
-export const createWelcomeEmail=(name)=>{
-    return`<!DOCTYPE html>
+export const createWelcomeEmail = (name) => {
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -89,8 +89,8 @@ export const createWelcomeEmail=(name)=>{
         </tr>
     </table>
 </body>
-</html>`
-}
+</html>`;
+};
 export const verificationCodeEmail = (name, verificationCode) => {
   return `
 <!DOCTYPE html>
@@ -119,7 +119,7 @@ export const verificationCodeEmail = (name, verificationCode) => {
           <tr>
             <td style="padding: 35px 30px;">
               <h2 style="margin: 0 0 16px; color: #f8fafc; font-size: 20px; font-weight: 600;">
-                Hello, ${name || 'User'}!
+                Hello, ${name || "User"}!
               </h2>
               <p style="margin: 0 0 24px; color: #94a3b8; font-size: 15px; line-height: 1.6;">
                 Thank you for joining us. Please use the verification code below to verify your email address and complete your setup:
@@ -160,4 +160,77 @@ export const verificationCodeEmail = (name, verificationCode) => {
 </body>
 </html>
   `;
+};
+export const resetPasswordEmail = (name, url) => {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Your Password</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #0f172a; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #f8fafc;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
+    <tr>
+      <td align="center" style="padding: 40px 10px;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 520px; background-color: #1e293b; border-radius: 16px; border: 1px solid #334155; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+          
+          <!-- Header -->
+          <tr>
+            <td align="center" style="padding: 30px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);">
+              <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">
+                Your App
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding: 35px 30px;">
+              <h2 style="margin: 0 0 16px; color: #f8fafc; font-size: 20px; font-weight: 600;">
+                Hello, ${name || "User"}!
+              </h2>
+              <p style="margin: 0 0 24px; color: #94a3b8; font-size: 15px; line-height: 1.6;">
+                We received a request to reset your account password. Click the button below to set up a new password:
+              </p>
+
+              <!-- Reset Button -->
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 28px 0;">
+                <tr>
+                  <td align="center">
+                    <a href="${url}" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: #ffffff; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 10px; padding: 14px 32px; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);">
+                      Reset Password
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Plain Text Fallback Link -->
+              <p style="margin: 0 0 20px; color: #64748b; font-size: 13px; line-height: 1.5; word-break: break-all;">
+                If the button above doesn't work, copy and paste this link into your browser:<br>
+                <a href="${url}" style="color: #f97316; text-decoration: underline;">${url}</a>
+              </p>
+
+              <p style="margin: 0; color: #94a3b8; font-size: 14px; line-height: 1.5;">
+                This link is valid for <strong>15 minutes</strong>. If you did not request a password reset, you can safely ignore this email—your password will remain unchanged.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="padding: 20px 30px; background-color: #0f172a; border-top: 1px solid #334155;">
+              <p style="margin: 0; color: #64748b; font-size: 12px;">
+                &copy; ${new Date().getFullYear()} Your App Name. All rights reserved.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+`;
 };
