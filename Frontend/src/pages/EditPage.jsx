@@ -21,7 +21,7 @@ const EditPage = () => {
   const [newData, setNewData] = useState({
     fullname: userData.fullname,
     username: userData.username,
-    gender: userData.gender || null,
+    gender: userData.gender || "",
     bio: userData.bio || "",
   })
   const [image, setImage] = useState(null)
