@@ -44,6 +44,9 @@ const SignUp = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
+    if (error) {
+      setError('')
+    }
     setFormData((prev) => {
       return {
         ...prev,
@@ -102,7 +105,12 @@ const SignUp = () => {
                 inputMode="numeric"
                 maxLength={6}
                 value={otp}
-                onChange={(e) => setOtp(e.target.value)}
+                onChange={(e) => {
+                  if (error) {
+                    setError('')
+                  }
+                  setOtp(e.target.value)
+                }}
                 placeholder="000000"
                 className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-4 text-center text-2xl font-semibold tracking-[0.5em] text-white outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
               />
@@ -268,6 +276,12 @@ const SignUp = () => {
                       </button>
                     </div>
 
+                    {error && (
+                      <p className="text-center text-sm mt-5 text-red-500 py-3 bg-slate-950 backdrop-blur-xl border border-red-500/20 rounded">
+                        {error}
+                      </p>
+                    )}
+
                     <label className="flex cursor-pointer items-start pt-5 gap-3 text-sm text-gray-400">
                       <input
                         required
@@ -288,7 +302,7 @@ const SignUp = () => {
                     className="group relative w-full overflow-hidden rounded-xl bg-linear-to-r from-orange-500 to-red-500 py-3.5 font-semibold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-orange-500/30 active:scale-[0.98]"
                   >
                     <span className="relative z-10">
-                      Create Account
+                      {loading ? "please wait.." : "Create Account"}
                     </span>
 
                     <div className="absolute inset-0 -translate-x-full bg-white/10 transition-transform duration-500 group-hover:translate-x-0" />
