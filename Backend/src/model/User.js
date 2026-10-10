@@ -27,8 +27,8 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["male", "female", "other"],
-      default: null,
+      enum: ["male", "female", "other","null"],
+      default: "null",
     },
     isVerified: {
       type: Boolean,
@@ -53,6 +53,14 @@ const userSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    resetPasswordToken: {
+      type: String,
+      default: null,
+    },
+    resetPasswordExpires: {
+      type: Date,
+      default: null,
+    },
     followers: [
       {
         type: mongoose.Schema.Types.ObjectId,

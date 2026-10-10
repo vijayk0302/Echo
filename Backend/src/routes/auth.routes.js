@@ -1,7 +1,9 @@
 import express from "express";
 import {
+  forgetPassword,
   login,
   logout,
+  resetPassword,
   signup,
   updateProfile,
   verifySignup,
@@ -21,6 +23,8 @@ authRoutes.post("/signup", signup);
 authRoutes.post("/verify", verifySignup);
 authRoutes.post("/login", login);
 authRoutes.post("/logout", logout);
+authRoutes.post("/forget-password", forgetPassword);
+authRoutes.post("/forget-password/:token", resetPassword);
 
 authRoutes.put(
   "/update-profile",

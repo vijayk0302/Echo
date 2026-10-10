@@ -139,6 +139,7 @@ const Login = () => {
                       Password
                     </label>
                     <button
+                    onClick={()=>handlenavigate("/forget-password")}
                       type="button"
                       className="text-xs text-orange-400 hover:text-orange-300"
                     >

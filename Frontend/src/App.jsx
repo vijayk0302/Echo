@@ -10,6 +10,8 @@ import ChatPage from './pages/ChatPage.jsx'
 import MainLayout from './layout/MainLayout.jsx'
 import SearchPage from './pages/SearchPage.jsx'
 import EditPage from './pages/EditPage.jsx'
+import Passwordrecover from './pages/Passwordrecover.jsx'
+import ResetPassword from './pages/ResetPassword.jsx'
 
 
 const App = () => {
@@ -19,6 +21,8 @@ const App = () => {
   return (
     <Routes>
       <Route element={<AuthRoutes />}>
+        <Route path='/forget-password' element={<Passwordrecover />} />
+        <Route path='/reset-password/:token' element={<ResetPassword />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/' element={<Home />} />
