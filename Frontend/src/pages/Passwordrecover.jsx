@@ -1,6 +1,7 @@
 import { Mail, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import api from "../api/api";
+import { MdMessage } from "react-icons/md";
 
 const Passwordrecover = () => {
     const [email, setEmail] = useState("")
@@ -13,7 +14,9 @@ const Passwordrecover = () => {
         try {
             const res = await api.post('/api/auth/forget-password', { email })
             console.log(res.data)
-            setStep("second")
+            if (res.data.success) {
+                setStep("second")
+            }
         } catch (error) {
             setError(error.response?.data?.message ||
                 "Something went wrong")
@@ -26,7 +29,33 @@ const Passwordrecover = () => {
     return (
         <>
             {
-                step === "second" ? ("hello") : (<>
+                step === "second" ? (
+                    <div className="min-h-screen w-full bg-slate-950 text-white flex items-center justify-center px-4">
+                        <div className="w-full max-w-lg rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-10 text-center shadow-2xl shadow-orange-500/10 backdrop-blur-xl">
+
+                           
+                            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/5">
+                               <MdMessage className="text-4xl text-orange-500" />
+                            </div>
+
+                        
+                            <h1 className="mb-4 text-2xl font-bold tracking-tight sm:text-3xl">
+                                Check Your Email
+                            </h1>
+
+                            
+                            <p className="mx-auto max-w-sm text-sm leading-7 text-slate-400 sm:text-base">
+                                We've sent you a password reset link. Please check your email inbox
+                                or spam folder to reset your password.
+                            </p>
+
+                            <p className="mt-6 text-sm text-slate-500">
+                                Didn't receive the email? Check your spam folder or try again.
+                            </p>
+
+                        </div>
+                    </div>
+                ) : (<>
                     <div className="min-h-screen w-full bg-slate-950 text-white flex justify-center items-center px-4">
                         <div className="w-full max-w-md border border-white/10 bg-white/5 rounded-2xl backdrop-blur-xl shadow-2xl p-6 sm:p-8">
 
@@ -56,13 +85,24 @@ const Passwordrecover = () => {
                                         id="email"
                                         type="email"
                                         value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        onChange={(e) => {
+                                            if (error) {
+                                                setError("")
+                                            }
+                                            setEmail(e.target.value)
+                                        }}
                                         placeholder="Enter your email"
                                         autoComplete="email"
                                         required
                                         className="w-full rounded-xl border border-slate-700 bg-slate-950 py-3 pl-12 pr-4 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
                                     />
                                 </div>
+
+                                {error && (
+                                    <p className="text-center text-sm mt-5 text-red-500 py-3 bg-slate-950 backdrop-blur-xl border border-red-500/20 rounded">
+                                        {error}
+                                    </p>
+                                )}
 
                                 <button
                                     disabled={loading}

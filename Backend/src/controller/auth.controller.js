@@ -300,11 +300,10 @@ export const forgetPassword = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    const message =
-      "If an account exists with this email, reset instructions will be sent.";
+    
 
     if (!user) {
-      return res.status(200).json({ success: true, message });
+      return res.status(400).json({ success: true, message:"user not found with this email" });
     }
 
     const resetToken = crypto.randomBytes(32).toString("hex");
@@ -316,11 +315,10 @@ export const forgetPassword = async (req, res) => {
 
     user.resetPasswordExpires = new Date(Date.now() + 15 * 60 * 1000);
 
-    const resetUrl = `${ENV.FRONT_END}/reset-password${resetToken}`;
+    const resetUrl = `${ENV.FRONT_END}/reset-password/${resetToken}`;
 
     await user.save();
 
-    console.log(resetUrl);
 
     const result = await sendResetPasswordEmail(
       user.email,
@@ -367,11 +365,11 @@ export const resetPassword = async (req, res) => {
 
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
-    const user = User.findOne({
+    const user =await User.findOne({
       resetPasswordToken: hashedToken,
       resetPasswordExpires: { $gt: new Date() },
     });
-
+    
     if (!user) {
       return res.status(400).json({
         success: false,
@@ -383,6 +381,7 @@ export const resetPassword = async (req, res) => {
     user.resetPasswordExpires = null;
 
     await user.save();
+
     return res.status(200).json({
       success: true,
       message: "Password reset successfully. Please log in.",

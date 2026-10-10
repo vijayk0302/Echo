@@ -8,15 +8,16 @@ import { BsEmojiSmile } from "react-icons/bs";
 import { CiImageOn } from "react-icons/ci";
 import { IoIosMic } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
+import { RiLoader4Fill } from "react-icons/ri";
 
 
 
 const SendMessageBox = ({ selectedUser }) => {
 
     const [showpicker, setShowPicker] = useState(false)
-
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
     const dispatch = useDispatch()
-
     const inputRef = useRef(null)
     const [text, setText] = useState('')
     const [image, setImage] = useState(null)
@@ -39,13 +40,20 @@ const SendMessageBox = ({ selectedUser }) => {
         const formData = new FormData()
         formData.append("text", text)
         formData.append("image", image)
+        try {
+            setLoading(true)
+            const res = await api.post(`/api/message/send/${selectedUser._id}`, formData)
+            dispatch(addMessage(res.data))
 
-        const res = await api.post(`/api/message/send/${selectedUser._id}`, formData)
-        dispatch(addMessage(res.data))
+        } catch (error) {
+            setError(error.response?.data?.message ||
+                "Something went wrong")
 
-        setImage(null)
-        setText("")
-
+        } finally {
+            setLoading(false)
+            setImage(null)
+            setText("")
+        }
     }
     const remove = () => {
         setImage(null)
@@ -61,7 +69,7 @@ const SendMessageBox = ({ selectedUser }) => {
                     <div className='absolute -top-22'>
                         <img className='h-20 w-20' src={URL.createObjectURL(image)} alt="" />
                         <button onClick={remove} className='absolute p-2 cursor-pointer bg-black rounded-full top-0 right-0'>
-                            <RxCross1   />
+                            <RxCross1 />
                         </button>
                     </div>
                 )
@@ -104,11 +112,20 @@ const SendMessageBox = ({ selectedUser }) => {
                         rows={1}
                         cols={1}
                         placeholder='Type message...'
-                        className="flex-1  resize-none rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-gray-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 "/>
+                        className="flex-1  resize-none rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-gray-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 " />
 
-                    <button type='submit' className='md:px-8 px-4 rounded-full bg-orange-500 py-2'>
-                        <FiSend className='text-sm sm:text-3xl' />
-                    </button>
+                    {
+                        loading ? (<div className='w-fit py-3'>
+                            <RiLoader4Fill className=" text-3xl animate-spin text-orange-500 " />
+                        </div>
+                        ) : (<button
+                            disabled={loading}
+                            type='submit'
+                            className='md:px-8 px-4 rounded-full bg-orange-500 py-2'>
+                            <FiSend className='text-sm sm:text-3xl' />
+                        </button>)
+                    }
+
                 </form>
             </div>
 
