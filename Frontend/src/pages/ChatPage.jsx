@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import api from '../api/api'
 import dp from '/dp.jpg'
 import ChatNav from '../components/ChatPage/ChatNav'
@@ -10,12 +10,16 @@ import Messages from '../components/ChatPage/Messages'
 import Logout from '../components/comman/Logout'
 
 
+
 const ChatPage = () => {
+
     const dispatch = useDispatch()
     const { selectedUser } = useSelector(state => state.user)
 
     const [inboxData, setInboxData] = useState([])
-    
+
+    const [replyTo, setReplyTo] = useState(null)
+
     const fetch = async () => {
         const res = await api.get("/api/message/inbox")
         if (res) {
@@ -40,6 +44,7 @@ const ChatPage = () => {
                         placeholder='username...'
                         className="w-full rounded-full px-4 py-2.5 border border-white/10 bg-white/5  text-white outline-none transition-all placeholder:text-gray-600 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20" type="text" />
                 </div>
+
                 {
                     inboxData.map((item) => {
                         return (
@@ -58,6 +63,7 @@ const ChatPage = () => {
                         )
                     })
                 }
+
             </aside>
             <div className={`w-full sm:w-[70%] h-full ${!selectedUser ? 'hidden sm:flex' : 'flex'
                 } flex-col`}>
@@ -65,8 +71,8 @@ const ChatPage = () => {
                     selectedUser ? (
                         <div className='w-full h-full flex flex-col pb-15 sm:pb-0 relative echo-scrollbar'>
                             <ChatNav selectedUser={selectedUser} />
-                            <Messages selectedUser={selectedUser} />
-                            <SendMessageBox selectedUser={selectedUser} />
+                            <Messages selectedUser={selectedUser} replyTo={replyTo} setReplyTo={setReplyTo} />
+                            <SendMessageBox selectedUser={selectedUser} replyTo={replyTo} setReplyTo={setReplyTo} />
                         </div>) : (
                         <Defaultchatpage />
                     )

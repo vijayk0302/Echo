@@ -12,7 +12,7 @@ import { RiLoader4Fill } from "react-icons/ri";
 
 
 
-const SendMessageBox = ({ selectedUser }) => {
+const SendMessageBox = ({ selectedUser, replyTo, setReplyTo }) => {
 
     const [showpicker, setShowPicker] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -38,8 +38,13 @@ const SendMessageBox = ({ selectedUser }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const formData = new FormData()
-        formData.append("text", text)
-        formData.append("image", image)
+        if (image) {
+            formData.append("image", image);
+        }
+
+        if (replyTo) {
+            formData.append("replyTo", replyTo._id);
+        }
         try {
             setLoading(true)
             const res = await api.post(`/api/message/send/${selectedUser._id}`, formData)
