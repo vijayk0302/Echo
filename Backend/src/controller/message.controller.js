@@ -65,7 +65,12 @@ export const getMessageById = async (req, res) => {
 
     const messages = await Message.find({
       conversationId: conversation._id,
-    }).sort({ createdAt: 1 });
+    })
+      .populate({
+        path: "replyTo",
+        select: "text image senderId",
+      })
+      .sort({ createdAt: 1 });
     res.status(200).json({
       message: "messages fetch successfully",
       messages,
@@ -133,7 +138,7 @@ export const sendMessage = async (req, res) => {
         participants: [senderId, receiverId],
       });
     }
-    
+
     if (replyTo) {
       const originalMessage = await Message.findOne({
         _id: replyTo,
@@ -154,11 +159,15 @@ export const sendMessage = async (req, res) => {
       image: imageUrl,
       replyTo: replyTo || null,
     });
+
     await newMessage.populate({
       path: "replyTo",
       select: "text image senderId",
     });
+
     conversation.lastMessage = newMessage._id;
+
+    console.log("Populated replyTo:", newMessage.replyTo);
 
     await conversation.save();
 

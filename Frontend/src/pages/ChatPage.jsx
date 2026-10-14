@@ -9,15 +9,10 @@ import SendMessageBox from '../components/ChatPage/SendMessageBox'
 import Messages from '../components/ChatPage/Messages'
 import Logout from '../components/comman/Logout'
 
-
-
 const ChatPage = () => {
-
     const dispatch = useDispatch()
     const { selectedUser } = useSelector(state => state.user)
-
     const [inboxData, setInboxData] = useState([])
-
     const [replyTo, setReplyTo] = useState(null)
 
     const fetch = async () => {
