@@ -31,12 +31,13 @@ const Messages = ({ selectedUser, replyTo, setReplyTo }) => {
     const dispatch = useDispatch()
     const { userData, messages } = useSelector(state => state.user)
 
+
     const fetchMessages = async () => {
         dispatch(setMessages([]))
         if (!selectedUser._id) return
         try {
             const res = await api.get(`/api/message/inbox/${selectedUser._id}`)
-            console.log("Inbox messages:", res.data.messages);
+            console.log(res.data.messages)
             dispatch(setMessages(res.data.messages || []))
         } catch (error) {
             console.error("Error fetching messages:", error?.response?.data?.message);
@@ -101,7 +102,13 @@ const Messages = ({ selectedUser, replyTo, setReplyTo }) => {
                                                         ? "bg-black/20 border-white/80 text-white/90"
                                                         : "bg-white/10 border-orange-500 text-gray-300"
                                                         }`}>
-                                                        <p className="font-medium opacity-75">Replying to</p>
+                                                        <p className="font-medium opacity-75">
+                                                            {
+                                                                isMine ? (
+                                                                    <span> Replied to {message?.replyTo?.senderId === message?.senderId ? "Yourself" : selectedUser.username}
+                                                                    </span>) : (<span>  Replied to {message?.replyTo?.senderId === message?.senderId ? "themself" : "you"}</span>)
+                                                            }
+                                                        </p>
                                                         <p className="truncate max-w-50">
                                                             {message.replyTo.text || (message.replyTo.image ? "Photo" : "Attachment")}
                                                         </p>
