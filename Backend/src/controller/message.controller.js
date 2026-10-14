@@ -4,7 +4,7 @@ import Conversation from "../model/conversation.js";
 import Message from "../model/Message.js";
 import User from "../model/User.js";
 import sendImage from "../Service/Storage.services.js";
-import {io} from '../../index.js'
+import { io } from "../../index.js";
 
 export const getInbox = async (req, res) => {
   try {
@@ -65,7 +65,12 @@ export const getMessageById = async (req, res) => {
 
     const messages = await Message.find({
       conversationId: conversation._id,
-    }).sort({ createdAt: 1 });
+    })
+      .populate({
+        path: "replyTo",
+        select: "text image senderId",
+      })
+      .sort({ createdAt: 1 });
     res.status(200).json({
       message: "messages fetch successfully",
       messages,
@@ -80,7 +85,7 @@ export const getMessageById = async (req, res) => {
 
 export const sendMessage = async (req, res) => {
   try {
-    const { text } = req.body;
+    const { text, replyTo } = req.body;
     const image = req.file;
 
     const senderId = req.user.id;
@@ -111,7 +116,7 @@ export const sendMessage = async (req, res) => {
 
     if (image) {
       const result = await sendImage(image.buffer.toString("base64"));
-      imageUrl=result.url
+      imageUrl = result.url;
     }
 
     const isMutual = await areMutualFollowers(senderId, receiverId);
@@ -134,24 +139,44 @@ export const sendMessage = async (req, res) => {
       });
     }
 
+    if (replyTo) {
+      const originalMessage = await Message.findOne({
+        _id: replyTo,
+        conversationId: conversation._id,
+      });
+      if (!originalMessage) {
+        return res.status(400).json({
+          message: "Invalid reply message",
+        });
+      }
+    }
+
     const newMessage = await Message.create({
       conversationId: conversation._id,
       senderId,
       receiverId,
       text: text,
       image: imageUrl,
+      replyTo: replyTo || null,
+    });
+
+    await newMessage.populate({
+      path: "replyTo",
+      select: "text image senderId",
     });
 
     conversation.lastMessage = newMessage._id;
+
+    console.log("Populated replyTo:", newMessage.replyTo);
 
     await conversation.save();
 
     // TODO: Send message in real time using Socket.IO
 
-    const receiverSocketId=getReceiverSocketId(receiverId)
-    
-    if(receiverSocketId){
-      io.to(receiverSocketId).emit("newMessage",newMessage)
+    const receiverSocketId = getReceiverSocketId(receiverId);
+
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
     }
 
     res.status(201).json(newMessage);
