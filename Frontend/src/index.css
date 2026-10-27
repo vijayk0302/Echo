@@ -7,7 +7,7 @@ body {
 }
 * {
   scrollbar-width: thin;
-  scrollbar-color: #f97316 #020617;
+  scrollbar-color: #51a2ff #020617;
 }
 
 ::-webkit-scrollbar {
@@ -25,4 +25,19 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #ea580c;
+}
+
+@theme {
+  --color-ui-bg:var(--bg);
+  --color-ui-text:var(--text);
+  --color-button:var(--bg-button);
+  --color-hover:var(--hover)
+}
+
+:root {
+  --bg:#51a2ff;
+  --text:#000000;
+  --bg-button:#ffffff;
+  --hover:#000000;
+ 
 }

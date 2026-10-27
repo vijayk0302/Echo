@@ -11,6 +11,8 @@ const Messages = ({ selectedUser, replyTo, setReplyTo }) => {
 
     const [menu, setMenu] = useState(null)
     const timerRef = useRef(null);
+    const touchStart = useRef(null)
+    const longPressTriggered = useRef(false)
 
     const handleMouseDown = (message) => {
         timerRef.current = setTimeout(() => {
@@ -27,6 +29,39 @@ const Messages = ({ selectedUser, replyTo, setReplyTo }) => {
         setMenu(null);
     }
 
+    const handleTouchStart = (e, message) => {
+        const touch = e.touches[0]
+        touchStart.current = {
+            x: touch.clientX,
+            message,
+        };
+
+        longPressTriggered.current = false
+
+        timerRef.current = setTimeout(() => {
+            longPressTriggered.current = true;
+            setMenu(message._id);
+        }, 800);
+    }
+
+    const handleTouchMove = (e) => {
+        const touchX = e.touches[0].clientX;
+        const diff = touchX - touchStart.current.x
+
+        if (diff > 0 && diff <= 90) {
+            clearPressTimer();
+        }
+
+    }
+
+    const clearPressTimer = () => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+            timerRef.current = null;
+        }
+    };
+
+
     const bottomRef = useRef(null);
     const dispatch = useDispatch()
     const { userData, messages } = useSelector(state => state.user)
@@ -37,7 +72,6 @@ const Messages = ({ selectedUser, replyTo, setReplyTo }) => {
         if (!selectedUser._id) return
         try {
             const res = await api.get(`/api/message/inbox/${selectedUser._id}`)
-            console.log(res.data.messages)
             dispatch(setMessages(res.data.messages || []))
         } catch (error) {
             console.error("Error fetching messages:", error?.response?.data?.message);
@@ -89,6 +123,11 @@ const Messages = ({ selectedUser, replyTo, setReplyTo }) => {
                                     >
                                         <div className='relative max-w-[70%]'>
                                             <div
+                                                onTouchCancel={() => {
+                                                    clearPressTimer()
+                                                    touchStart.current = null
+                                                }}
+                                                onTouchStart={(e) => handleTouchStart(e, message)}
                                                 onMouseDown={() => handleMouseDown(message)}
                                                 onMouseUp={handleMouseUp}
                                                 onMouseLeave={handleMouseUp}
@@ -131,7 +170,7 @@ const Messages = ({ selectedUser, replyTo, setReplyTo }) => {
                                             {
                                                 menu == message._id && (
                                                     <div
-                                                        className={`absolute z-20 top-full mt-1 bg-zinc-800 border border-zinc-700 rounded-lg shadow-xl flex flex-col py-1 w-28 ${isMine ? "right-0" : "left-0"
+                                                        className={`absolute z-20 top-full mt-1 bg-slate-950 border border-orange-700 rounded-lg shadow-xl flex flex-col py-1 w-28 ${isMine ? "right-0" : "left-0"
                                                             }`}
                                                         onClick={(e) => e.stopPropagation()}
                                                     >
@@ -141,6 +180,14 @@ const Messages = ({ selectedUser, replyTo, setReplyTo }) => {
                                                         >
                                                             Reply
                                                         </button>
+                                                        {
+                                                            isMine && (<button
+
+                                                                className="px-4 py-2 text-left text-sm text-red-400 hover:bg-zinc-700 transition"
+                                                            >
+                                                                Unsend
+                                                            </button>)
+                                                        }
                                                     </div>
                                                 )}
                                         </div>

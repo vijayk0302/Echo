@@ -48,7 +48,7 @@ const ChatPage = () => {
                                 onClick={() => { dispatch(setSelectedUser(item.user)) }}
                                 className='w-full cursor-pointer px-5 gap-5 flex items-center h-17'>
                                 <div className='h-12 w-12'>
-                                    <img className='w-full h-full rounded-full ' src={item.user.profilepic || dp} alt="" />
+                                    <img className='w-full h-full rounded-full object-cover' src={item.user.profilepic || dp} alt="" />
                                 </div>
                                 <div >
                                     <h1 className='text-lg'>{item.user.username}</h1>

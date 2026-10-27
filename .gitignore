@@ -27,3 +27,5 @@ node_modules
 .env
 random.txt
 package-lock.json
+
+theme.txt
