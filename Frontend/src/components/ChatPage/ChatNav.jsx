@@ -7,7 +7,7 @@ import { setSelectedUser } from "../../redux/features/userSlice";
 const ChatNav = ({ selectedUser }) => {
   const dispatch=useDispatch()
   return (
-    <div className='w-full h-20 px-5 border-b border-[#8F8F8F]/30 flex items-center justify-between'>
+    <div className='w-full h-20 px-5 border-b fixed-top border-[#8F8F8F]/30 flex items-center justify-between'>
       <div className='flex gap-3'>
         <button onClick={()=>dispatch(setSelectedUser(null))} className='sm:hidden' >
         <FaChevronLeft />
