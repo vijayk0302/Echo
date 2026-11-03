@@ -82,7 +82,7 @@ const SignUp = () => {
 
     {
       step === "verify" ? (
-        <div className="relative min-h-screen w-full overflow-hidden bg-linear-to-b from-ui-bg from-30% to-white px-4 py-6 text-ui-text">
+        <div className="relative min-h-screen w-full overflow-hidden bg-linear-to-b from-blue-400 from-30% to-white px-4 py-6 text-ui-text">
 
           <div
             onClick={() => handlenavigate('/')}
@@ -150,7 +150,7 @@ const SignUp = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full h-screen bg-linear-to-b from-ui-bg from-30% to-white ">
+        <div className="w-full h-screen bg-linear-to-b from-blue-400 from-30% to-white ">
           <div
             onClick={() => handlenavigate('/')}
             className="flex items-center gap-2 px-3 py-4 cursor-pointer select-none"

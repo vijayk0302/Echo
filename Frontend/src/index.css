@@ -29,15 +29,13 @@ body {
 
 @theme {
   --color-ui-bg:var(--bg);
+  --color-ui-secbg:var(--secbg);
   --color-ui-text:var(--text);
-  --color-button:var(--bg-button);
-  --color-hover:var(--hover)
+
 }
 
 :root {
-  --bg:#51a2ff;
-  --text:#000000;
-  --bg-button:#ffffff;
-  --hover:#000000;
- 
+  --bg:#000000;
+  --secbg:#070606;
+  --text:#ffffff;
 }

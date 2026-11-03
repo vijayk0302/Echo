@@ -12,8 +12,8 @@ const Model = ({ setShow, tab, followers, following }) => {
         <>
             {
                 tab === "followers" ? (
-                    <div className="absolute top-0 left-0 h-full w-full flex justify-center items-center bg-black/70 ">
-                        <div className="bg-slate-950 sm:h-150 sm:w-150 h-full w-full rounded-xl border-orange-500/10 border-b py-4 shadow-lg">
+                    <div className="absolute text-white top-0 left-0 h-full w-full flex justify-center items-center bg-black/70 ">
+                        <div className="bg-ui-bg sm:h-150 sm:w-150 h-full w-full rounded-xl border-b py-4 shadow-lg">
                             <div className="flex sm:block w-[50%] relative sm:w-full justify-between px-4">
                                 <button onClick={() => setShow(false)} className="absolute hidden sm:block right-10 text-2xl"><RxCross1 /></button>
                                 <button onClick={() => setShow(false)} className="sm:hidden ">  <FaChevronLeft /></button>
@@ -22,14 +22,14 @@ const Model = ({ setShow, tab, followers, following }) => {
                             <div className="sm:px-15 px-3">
                                 <input
                                     placeholder='username...'
-                                    className="w-full rounded px-4 py-2.5 border border-white/10 bg-white/5  text-white outline-none transition-all placeholder:text-gray-600 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20" type="text" />
+                                    className="w-full rounded px-4 py-2.5 border border-white/10 bg-transparent  text-white outline-none transition-all placeholder:text-[#8F8F8F]/30" type="text" />
                             </div>
-                            <div className="h-0.5 bg-orange-500/10 w-full mt-5" />
-                            <div className='w-full sm:px-10 px-5 mt-4'>
+                            <div className="h-0.5 bg-[#8F8F8F]/30 w-full mt-5" />
+                            <div className='w-full px-4 '>
                                 {
                                     followers.map((item) => {
                                         return (
-                                            <div className='w-full flex justify-between py-1' key={item._id}>
+                                            <div className='w-full flex justify-between  py-1' key={item._id}>
                                                 <div onClick={() => { 
                                                     setShow(false)
                                                     handlenavigate(`/profile/${item._id}`)}} className='flex items-center gap-5 '>
@@ -59,8 +59,8 @@ const Model = ({ setShow, tab, followers, following }) => {
                         </div>
                     </div>
                 ) : (
-                    <div className="absolute top-0 left-0 h-full w-full flex justify-center items-center bg-black/70 ">
-                        <div className="bg-slate-950 sm:h-100 sm:w-150 h-full w-full rounded-xl border-orange-500/10 border-b py-4 shadow-lg">
+                    <div className="absolute top-0 left-0 text-white h-full w-full flex justify-center items-center bg-black/70 ">
+                        <div className="bg-ui-bg sm:h-100 sm:w-150 h-full w-full rounded-xl border-[#8F8F8F]/30 border-b py-4 shadow-lg">
                             <div className="flex sm:block w-[50%] relative sm:w-full justify-between px-4">
                                 <button onClick={() => setShow(false)} className="absolute hidden sm:block right-10 text-2xl"><RxCross1 /></button>
                                 <button onClick={() => setShow(false)} className="sm:hidden ">  <FaChevronLeft /></button>
@@ -69,9 +69,9 @@ const Model = ({ setShow, tab, followers, following }) => {
                             <div className="sm:px-15 px-3">
                                 <input
                                     placeholder='username...'
-                                    className="w-full rounded px-4 py-2.5 border border-white/10 bg-white/5  text-white outline-none transition-all placeholder:text-gray-600 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20" type="text" />
+                                    className="w-full rounded px-4 py-2.5 border border-white/10 bg-transparent  text-white outline-none transition-all placeholder:text-[#8F8F8F]/30 " type="text" />
                             </div>
-                            <div className="h-0.5 bg-orange-500/10 w-full mt-5" />
+                            <div className="h-0.5 bg-[#8F8F8F]/30 w-full mt-5" />
                             <div className='w-full sm:px-10 px-5 mt-4'>
                                 {
                                     following.map((item) => {
