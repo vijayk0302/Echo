@@ -76,13 +76,13 @@ const SendMessageBox = ({ selectedUser, replyTo, setReplyTo }) => {
 
     return (
         <>
-            <div className={`bg-slate-950 border-t border-white/10 relative w-full transition-all duration-200 px-4 
+            <div className={`bg-ui-bg border-t border-white/10 relative w-full transition-all duration-200 px-4 
             ${replyTo ? "max-h-20 py-2 opacity-100" : "max-h-0 py-0 opacity-0"}
             `} >
                 {
                     replyTo && (
                         <>
-                            <h1 className='text-xs text-orange-400 font-medium'>Replying to {replyTo.senderId==userData._id?"yourself":selectedUser.username} </h1>
+                            <h1 className='text-xs text-ui-text font-medium'>Replying to {replyTo.senderId==userData._id?"yourself":selectedUser.username} </h1>
                             <p className='text-sm text-gray-300 truncate max-w-[85%]'>{(replyTo.image ? "Photo" : "") || replyTo.text}</p>
 
                             <button onClick={() => setReplyTo(null)} className='absolute top-2 right-3'>
@@ -92,7 +92,7 @@ const SendMessageBox = ({ selectedUser, replyTo, setReplyTo }) => {
                         </>)
                 }
             </div>
-            <div className='relative bg-slate-950 w-full rounded-full flex  border-2 border-orange-500/10 px-5 h-fit '>
+            <div className='relative bg-[#070606] w-full  flex  border border-[#8F8F8F]/30 px-5 h-fit '>
                 {
                     image && (
                         <div className='absolute -top-22'>
@@ -141,17 +141,17 @@ const SendMessageBox = ({ selectedUser, replyTo, setReplyTo }) => {
                             rows={1}
                             cols={1}
                             placeholder='Type message...'
-                            className="flex-1  resize-none rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-gray-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 " />
+                            className="flex-1  resize-none rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-gray-500   " />
 
                         {
                             loading ? (<div className='w-fit py-3'>
-                                <RiLoader4Fill className=" text-3xl animate-spin text-orange-500 " />
+                                <RiLoader4Fill className=" text-3xl animate-spin text-black " />
                             </div>
                             ) : (<button
                                 disabled={loading}
                                 type='submit'
-                                className='md:px-8 px-4 rounded-full bg-orange-500 py-2'>
-                                <FiSend className='text-sm sm:text-3xl' />
+                                className='md:px-8 px-4 rounded-full bg-white py-2'>
+                                <FiSend className='text-sm sm:text-3xl text-black' />
                             </button>)
                         }
 

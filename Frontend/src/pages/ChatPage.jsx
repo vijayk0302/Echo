@@ -8,8 +8,11 @@ import Defaultchatpage from '../components/ChatPage/Defaultchatpage'
 import SendMessageBox from '../components/ChatPage/SendMessageBox'
 import Messages from '../components/ChatPage/Messages'
 import Logout from '../components/comman/Logout'
+import { FaChevronLeft } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom'
 
 const ChatPage = () => {
+    const navigate= useNavigate()
     const dispatch = useDispatch()
     const { selectedUser } = useSelector(state => state.user)
     const [inboxData, setInboxData] = useState([])
@@ -26,19 +29,19 @@ const ChatPage = () => {
         fetch()
     }, [])
     return (
-        <div className='h-screen text-white flex bg-slate-950 overflow-hidden w-full'>
-            <aside className={`w-full sm:w-[30%] sm:min-w-75 h-full  border-r-2 flex-col border-orange-500/10
+        <div className='h-screen text-white flex bg-ui-bg overflow-hidden w-full'>
+            <aside className={`w-full sm:w-[30%] sm:min-w-75 h-full  border-r flex-col border-[#8F8F8F]/30
                 ${selectedUser ? "hidden sm:flex" : "flex"}  `} >
-
-                <div className='flex justify-between items-center px-5 py-2 shrink-0'>
-                    <h1 className='text-3xl sm:text-4xl font-bold'>Chats</h1>
+                <div className='flex justify-between h-20 items-center px-5 py-5 shrink-0 border-b border-[#8F8F8F]/30'>
+                    <div className='flex gap-5'>
+                        <button className='sm:hidden' onClick={()=>navigate(-1)} >
+                            <FaChevronLeft />
+                        </button>
+                        <h1 className='text-3xl sm:text-4xl font-bold'>Inbox</h1>
+                    </div>
                     <Logout />
                 </div>
-                <div className='px-5 border-b border-orange-500/10 pb-4 shrink-0'>
-                    <input
-                        placeholder='username...'
-                        className="w-full rounded-full px-4 py-2.5 border border-white/10 bg-white/5  text-white outline-none transition-all placeholder:text-gray-600 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20" type="text" />
-                </div>
+
 
                 {
                     inboxData.map((item) => {

@@ -29,9 +29,9 @@ const App = () => {
       </Route>
       <Route element={<Protectedroute />}>
         <Route element={<MainLayout />}>
+          <Route path='/chat' element={<ChatPage />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/profile/:userId' element={<Profile />} />
-          <Route path='/chat' element={<ChatPage />} />
           <Route path='/search' element={< SearchPage />} />
           <Route path='/edit-profile/:id' element={< EditPage />} />
         </Route>

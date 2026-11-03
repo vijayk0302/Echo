@@ -53,7 +53,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="h-screen w-full bg-linear-to-b from-ui-bg from-5% to-white to-95%">
+      <div className="h-screen w-full bg-linear-to-b from-blue-400 from-5% to-white to-95%">
         <div
           onClick={() => handlenavigate('/')}
           className="flex items-center gap-2 px-3 py-4 cursor-pointer select-none"
@@ -65,7 +65,7 @@ const Login = () => {
         </div>
 
         <div className="w-full h-fit px-2 flex justify-center items-center">
-          <div className="px-10 py-4 mt-25 bg-transparent border border-black/10 backdrop-blur-md shadow-sm rounded-[15px]">
+          <div className="px-10 py-4 mt-15 bg-transparent border border-black/10 backdrop-blur-md shadow-sm rounded-[15px]">
             <div className="mb-8 flex justify-center md:hidden">
               <div className="rounded-full bg-white/10 p-1">  
                 <button

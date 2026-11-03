@@ -7,6 +7,7 @@ import api from "../api/api";
 import Model from "../components/profile/Model";
 import { useParams } from "react-router-dom";
 import { setSelectedUser } from "../redux/features/userSlice";
+import { FaChevronLeft } from "react-icons/fa";
 
 
 const Profile = () => {
@@ -35,7 +36,7 @@ const Profile = () => {
   const fullname = profile?.fullname || "fullname"
   const username = profile?.username || "username"
   const profilepic = profile?.profilepic || dp
-  const bio = profile?.bio || "i am new here"
+  const bio = profile?.bio || 'Digital explorer and creator at heart. Turning big ideas into simple, elegant solutions.Always learning, building, and moving forward.'
   const following = profile?.following || []
   const followers = profile?.followers || []
   const gender = profile?.gender || "not set yet"
@@ -78,14 +79,14 @@ const Profile = () => {
     try {
       if (isFollowing) {
         const res = await api.put(`/api/update/unfollow/${userId}`)
-        if(res.data.success){
+        if (res.data.success) {
           setIsFollowing(false)
           fetchConnections()
         }
-        
+
       } else {
         const res = await api.put(`/api/update/follow/${userId}`)
-         if(res.data.success){
+        if (res.data.success) {
           setIsFollowing(true)
           fetchConnections()
         }
@@ -105,7 +106,7 @@ const Profile = () => {
 
   if (loading && !profile) {
     return (
-      <div className="h-screen w-screen bg-slate-950 flex items-center justify-center text-white">
+      <div className="h-screen w-screen bg-black flex items-center justify-center text-white">
         <p>Loading profile...</p>
       </div>
     );
@@ -114,91 +115,70 @@ const Profile = () => {
 
   return (
     <>
-      <div className="h-screen relative bg-slate-950 w-screen px-0 text-white sm:px-[20vw]">
-        <div className="relative w-full h-full">
-          <div style={{ backgroundImage: `url(${bckImage})` }} className={`w-full absolute top-0 h-70 bg-cover bg-center bg-no-repeat`}>
+      <div className="bg-ui-bg min-h-screen w-full p-1">
+        <div className=" mx-auto my-2  h-full sm:w-167.5 px-2">
+          <div className="flex gap-5">
+            <button className='text-white text-2xl sm:hidden' onClick={() => handlenavigate(-1)} >
+              <FaChevronLeft />
+            </button>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white">Profile</h1>
           </div>
-          <div className="bg-[#0F172B] absolute top-[25%] h-full w-full rounded-t-[50px] sm:rounded-none p-1">
-            <div className="w-full flex -mt-15 justify-center ">
-              <img className="h-30 w-30 rounded-full border-white border-4 object-cover" src={profilepic || dp} alt="" />
+          <div className="md:h-72.5 md:w-163.5 ">
+            <img className="h-full w-full object-center object-cover rounded-xl" src={bckImage} alt="" />
+          </div>
+          <div className="md:h-fit md:p-20 pt-22 p-2 relative md:w-163.5 mt-3 sm:bg-[#070606] bg-transparent rounded-xl text-white">
+            <div className="h-30 w-30 absolute -top-15 left-10 sm:left-20 rounded-full border-3 overflow-hidden">
+              <img className="object-center w-full h-full object-cover" src={profilepic || dp} alt="" />
             </div>
-            <h1 className="text-center sm:text-4xl font-semibold text-2xl py-6 capitalize">{fullname}</h1>
-            <p className="text-center sm:text-xl font-semibold text-lg py-2 text-gray-500">@{username}</p>
-            <div className="mt-3 px-[10vw]">
-              <h2 className="text-lg w-full sm:text-xl text-center leading-6 line-clamp-2">{bio}</h2>
+            <div className="flex gap-5">
+              <h1 className="text-[#8f8f8f] text-2xl ">@{username}</h1>
+              <div className="bg-[#8f8f8f] h-px w-6.25 sm:hidden rotate-90 mt-4"></div>
+              <p className="mt-1">{fullname}</p>
             </div>
-            <div className="flex justify-evenly items-center w-full h-20">
-
-              {
-                isMine ? (
-                  <>
-                    <button onClick={() => handlenavigate(`/edit-profile/${userData._id}`)} className="rounded-xl border  bg-white/5 px-5 py-2.5 text-sm font-normal transition-all duration-100 border-orange-500/30 active:scale-[0.95] hover:bg-orange-500/10">
-                      Edit Profile
-                    </button>
-                    <button onClick={() => handlenavigate('/chat')} className="rounded-xl border  bg-white/5 px-5 py-2.5 text-sm font-normal active:scale-[0.95] transition-all duration-100 border-orange-500/30 hover:bg-orange-500/10">
-                      Chats
-                    </button>
-                  </>) : (
-                  <>
-                    <button
-                      onClick={handleToggle}
-                      // disabled={loading}
-                      className={`rounded-xl px-5 py-2.5 text-sm font-normal transition-all duration-100 active:scale-[0.95] ${isFollowing
-                        ? 'border border-gray-600 bg-white/10 hover:bg-red-500/20 hover:border-red-500'
-                        : 'bg-orange-500 hover:bg-orange-600 text-white'
-                        }`}
-                    >
-                      {isFollowing ? "Unfollow" : "Follow"}
-                    </button>
-
-                      <button
-                        onClick={() => {
-                          dispatch(setSelectedUser(profileData))
-                          handlenavigate('/chat')
-                        }}
-                        className="rounded-xl border bg-white/5 px-5 py-2.5 text-sm font-normal active:scale-[0.95] transition-all duration-100 border-orange-500/30 hover:bg-orange-500/10"
-                      >
-                        Message
-                      </button>
-                  </>
-
-                )
-              }
-
-              <button
-                onClick={() => navigator.clipboard?.writeText(window.location.href)}
-                className="rounded-xl bg-linear-to-r from-orange-500 to-red-500 px-5 py-2.5 text-sm font-normal shadow-lg shadow-orange-500/20 transition-all hover:scale-[1.02]">
-                Share Profile
-              </button>
-            </div>
-            <div className="mx-auto mt-8 h-px w-[85%] bg-linear-to-r from-transparent via-slate-700 to-transparent" />
-            <div className="w-full flex justify-evenly items-center mt-6">
-              {/* <div className="text-center  capitalize">
-                <p>0</p>
-                <h2>posts</h2>
-              </div> */}
-              <div onClick={() => {
+            <p className="text-[#919191] w-[320px] h-fit mt-4 text-sm sm:text-[15px]">{bio}</p>
+            <div className="sm:w-87.5 sm:h-28.75 bg-[#070606] sm:bg-[#464646] mt-5 rounded-xl flex justify-evenly items-center">
+              <div className="text-center" onClick={() => {
                 setShow(true)
                 setTab("followers")
-              }} className="text-center cursor-pointer group">
-                <p className="text-lg group-hover:text-orange-400 sm:text-2xl">{list.followers.length}</p>
-                <h2 className="text-lg  sm:text-3xl ">followers</h2>
+              }}>
+                <span className="text-[30px]">{list.followers.length}</span>
+                <p className="text-lg sm:text-[24px]">followers</p>
               </div>
-              <div onClick={() => {
+              <div className="text-center" onClick={() => {
                 setShow(true)
                 setTab("followings")
-              }} className="text-center cursor-pointer group">
-                <p className="text-lg group-hover:text-orange-400 sm:text-2xl">{list.following.length}</p>
-                <h2 className="text-lg  sm:text-3xl">following</h2>
+              }}>
+                <span className="text-[30px]">{list.following.length}</span>
+                <p className="text-lg sm:text-[24px]">following</p>
               </div>
+            </div>
+            <div className="flex md:w-87.5 mt-4 justify-between px-2 pb-5 sm:px-0">
+              {isMine ? (
+                <>
+                  <button onClick={() => handlenavigate(`/edit-profile/${userData._id}`)} className="border text-[20px] rounded-[10px] px-9 py-3">
+                    Edit
+                  </button>
+
+                </>) : (
+                <>
+                  <button
+                    onClick={handleToggle}
+                    // disabled={loading}
+                    className={`rounded-xl px-5 py-2.5 text-sm font-normal transition-all duration-100 active:scale-[0.95] ${isFollowing
+                      ? 'border border-gray-600 bg-white/10 hover:bg-red-500/20 hover:border-red-500'
+                      : 'bg-orange-500 hover:bg-orange-600 text-white'
+                      }`}
+                  >
+                    {isFollowing ? "Unfollow" : "Follow"}
+                  </button>
+                </>)}
+              <button onClick={() => navigator.clipboard?.writeText(window.location.href)} className="border text-[20px] rounded-[10px] px-9 py-3">Share</button>
             </div>
           </div>
         </div>
-
         {
           show && (<Model setShow={setShow} tab={tab} followers={list.followers} following={list.following} />)
         }
-
       </div>
     </>
   );

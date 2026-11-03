@@ -4,7 +4,7 @@ const Navbar = () => {
   const { handlenavigate } = useRedirect();
 
   return (
-    <nav className="relative flex h-20 w-full items-center justify-between bg-ui-bg px-6 sm:px-12 text-ui-text">
+    <nav className="relative flex h-20 w-full items-center justify-between bg-blue-400 px-6 sm:px-12 text-black">
       
       <div 
         onClick={() => handlenavigate('/')} 

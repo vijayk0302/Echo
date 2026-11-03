@@ -5,9 +5,9 @@ import { Outlet } from 'react-router-dom'
 
 const MainLayout = () => {
   return (
-    <div className='flex overflow-hidden'>
-        <Sidebar/>
-        <main className='w-full'><Outlet/></main>
+    <div className='flex h-screen w-screen overflow-hidden'>
+        <Sidebar  />
+        <main className='flex-1 h-full overflow-y-auto'><Outlet/></main>
     </div>
   )
 }

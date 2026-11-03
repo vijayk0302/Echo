@@ -44,22 +44,22 @@ const SearchPage = () => {
   }
 
   return (
-    <div className='bg-slate-950 w-full flex justify-center  text-white h-screen'>
-      <div className='pt-5 w-full max-w-md sm:px-7 px-5'>
+    <div className='bg-ui-bg w-full flex justify-center text-white h-screen'>
+      <div className='w-full h-fit mt-3  bg-[#070606] max-w-md sm:px-7 px-5 rounded-[15px]'>
         <h1 className="text-2xl pt-2 text-left font-bold tracking-tight"> Search </h1>
-        <p className="text-sm py-3 text-left text-slate-500"> Find people and discover new connections </p>
+        <p className="text-sm py-3 text-left text-[#8F8F8F]"> Find people and discover new connections </p>
         <div className='w-full relative'>
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder='Search username....'
-            className="w-full rounded-full px-4 py-2.5 border border-white/10 bg-white/5  text-white outline-none transition-all placeholder:text-gray-600 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20" type="text" />
+            className="w-full rounded-full px-4 py-2.5 border  text-white transition-all placeholder:text-[#8F8F8F]" type="text" />
           {
-            !query && <CiSearch className='absolute top-2 right-4 text-3xl font-bold text-slate-500' />
+            !query && <CiSearch className='absolute top-2 right-4 text-3xl font-bold text-[#8F8F8F]' />
           }
 
           {
-            loading ? (<RiLoader4Fill className="absolute text-3xl right-4 top-1/2 -translate-y-1/2 animate-spin text-orange-500 " />) : query ? (<button onClick={clearSearch} className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full p-1.5 text-slate-500 transition hover:bg-white/10 hover:text-white "><RxCrossCircled className='text-2xl' /></button>) : null
+            loading ? (<RiLoader4Fill className="absolute text-3xl right-4 top-1/2 -translate-y-1/2 animate-spin text-white" />) : query ? (<button onClick={clearSearch} className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full p-1.5 text-slate-500 transition hover:bg-white/10 hover:text-white "><RxCrossCircled className='text-2xl text-[#8F8F8F]' /></button>) : null
           }
         </div>
 
@@ -67,7 +67,7 @@ const SearchPage = () => {
           {loading && (
             <div className="flex items-center justify-center py-10">
               <div className="flex items-center gap-2 text-sm text-slate-500">
-                <RiLoader4Fill className="animate-spin text-2xl text-orange-500" /> Searching... </div>
+                <RiLoader4Fill className="animate-spin text-2xl text-white" /> Searching... </div>
             </div>)
           }
           {
@@ -97,10 +97,10 @@ const SearchPage = () => {
           }
           {
             !loading && query.trim() && result.length === 0 && (
-              <div className=''>
+              <div className='bg-[#070606] mt-3 pb-4'>
                 <h2 className="text-sm font-semibold text-slate-300"> No users found
                 </h2>
-                <p className="mt-1 text-xs text-slate-600"> Try searching with a different username.</p>
+                <p className="mt-1 text-xs text-[#8F8F8F]"> Try searching with a different username.</p>
               </div>
             )
           }

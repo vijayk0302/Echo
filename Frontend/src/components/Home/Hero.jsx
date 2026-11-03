@@ -5,7 +5,7 @@ const Hero = () => {
   const { handlenavigate } = useRedirect();
 
   return (
-    <main className="relative flex min-h-[calc(100vh-80px)] w-full flex-col items-center justify-between overflow-hidden bg-ui-bg pt-10 sm:pt-16"> 
+    <main className="relative flex min-h-[calc(100vh-80px)] w-full flex-col items-center justify-between overflow-hidden bg-blue-400 pt-10 sm:pt-16"> 
       <div className="z-20 flex max-w-4xl flex-col items-center px-6 text-center">
         <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-6xl sm:leading-tight">
           A better way to stay connected

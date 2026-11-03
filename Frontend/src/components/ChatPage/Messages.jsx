@@ -122,6 +122,23 @@ const Messages = ({ selectedUser, replyTo, setReplyTo }) => {
                                             } `}
                                     >
                                         <div className='relative max-w-[70%]'>
+                                            {message.replyTo && (
+                                                <div className={`mb-2 p-2  text-xs border-r-4 ${isMine
+                                                    ? " border-white/80 text-white/90"
+                                                    : "bg-transparent text-gray-300"
+                                                    }`}>
+                                                    <p className="font-thin opacity-75">
+                                                        {
+                                                            isMine ? (
+                                                                <span> Replied to {message?.replyTo?.senderId === message?.senderId ? "Yourself" : selectedUser.username}
+                                                                </span>) : (<span>  Replied to {message?.replyTo?.senderId === message?.senderId ? "themself" : "you"}</span>)
+                                                        }
+                                                    </p>
+                                                    <p className="truncate max-w-50">
+                                                        {message.replyTo.text || (message.replyTo.image ? "Photo" : "Attachment")}
+                                                    </p>
+                                                </div>
+                                            )}
                                             <div
                                                 onTouchCancel={() => {
                                                     clearPressTimer()
@@ -132,27 +149,11 @@ const Messages = ({ selectedUser, replyTo, setReplyTo }) => {
                                                 onMouseUp={handleMouseUp}
                                                 onMouseLeave={handleMouseUp}
                                                 className={` overflow-hidden relative select-none rounded-2xl ${isMine
-                                                    ? "bg-linear-to-r from-orange-500 to-red-500 text-white"
-                                                    : "bg-white/5 border border-white/10 text-gray-200"
+                                                    ? "bg-[#701A75]  text-white"
+                                                    : "bg-[#27272A] text-gray-200"
                                                     }`}
                                             >
-                                                {message.replyTo && (
-                                                    <div className={`mb-2 p-2 rounded-xl text-xs border-l-4 ${isMine
-                                                        ? "bg-black/20 border-white/80 text-white/90"
-                                                        : "bg-white/10 border-orange-500 text-gray-300"
-                                                        }`}>
-                                                        <p className="font-medium opacity-75">
-                                                            {
-                                                                isMine ? (
-                                                                    <span> Replied to {message?.replyTo?.senderId === message?.senderId ? "Yourself" : selectedUser.username}
-                                                                    </span>) : (<span>  Replied to {message?.replyTo?.senderId === message?.senderId ? "themself" : "you"}</span>)
-                                                            }
-                                                        </p>
-                                                        <p className="truncate max-w-50">
-                                                            {message.replyTo.text || (message.replyTo.image ? "Photo" : "Attachment")}
-                                                        </p>
-                                                    </div>
-                                                )}
+                                               
                                                 {message.image && (
                                                     <img
                                                         src={message.image}
@@ -170,20 +171,20 @@ const Messages = ({ selectedUser, replyTo, setReplyTo }) => {
                                             {
                                                 menu == message._id && (
                                                     <div
-                                                        className={`absolute z-20 top-full mt-1 bg-slate-950 border border-orange-700 rounded-lg shadow-xl flex flex-col py-1 w-28 ${isMine ? "right-0" : "left-0"
+                                                        className={`absolute z-20 top-full mt-1 bg-ui-bg border border-[#8F8F8F]/30 rounded-lg shadow-xl flex flex-col py-1 w-28 ${isMine ? "right-0" : "left-0"
                                                             }`}
                                                         onClick={(e) => e.stopPropagation()}
                                                     >
                                                         <button
                                                             onClick={() => handleReply(message)}
-                                                            className="px-4 py-2 text-left text-sm text-gray-200 hover:bg-zinc-700 transition"
+                                                            className="px-4 py-2 text-left text-sm text-gray-200 hover:bg-zinc-700/10 transition"
                                                         >
                                                             Reply
                                                         </button>
                                                         {
                                                             isMine && (<button
 
-                                                                className="px-4 py-2 text-left text-sm text-red-400 hover:bg-zinc-700 transition"
+                                                                className="px-4 py-2 text-left text-sm text-red-400 hover:bg-zinc-700/10 transition"
                                                             >
                                                                 Unsend
                                                             </button>)
