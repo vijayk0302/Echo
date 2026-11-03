@@ -92,7 +92,7 @@ const SendMessageBox = ({ selectedUser, replyTo, setReplyTo }) => {
                         </>)
                 }
             </div>
-            <div className='relative bg-[#070606] w-full  flex  border border-[#8F8F8F]/30 px-5 h-fit '>
+            <div className='relative fixed-bottom bg-[#070606] w-full  flex  border border-[#8F8F8F]/30 px-5 h-fit '>
                 {
                     image && (
                         <div className='absolute -top-22'>
@@ -145,7 +145,7 @@ const SendMessageBox = ({ selectedUser, replyTo, setReplyTo }) => {
 
                         {
                             loading ? (<div className='w-fit py-3'>
-                                <RiLoader4Fill className=" text-3xl animate-spin text-black " />
+                                <RiLoader4Fill className="text-4xl animate-spin text-white " />
                             </div>
                             ) : (<button
                                 disabled={loading}
